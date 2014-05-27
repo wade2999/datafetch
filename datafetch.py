@@ -10,18 +10,18 @@ import sqlite3
 #and install the webcrawler extension
 
 def run_browser:
-	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1')
-	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/path2/')
+	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
+	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
 	time.sleep(60)
-	statinfo = os.stat('/path_db/httpfox.sqlite')
+	statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
 	file_size = statinfo.st_size 
 	# if open again, the add-on would cover it.
 	while file_size < 100:
 		browser.quit()
-		profile_1 = webdriver.FirefoxProfile('/path/')
-		extension = webdriver.FirefoxProfile.add_extension(profile_1,'/path2/')
+		profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
+		#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
 		browser = webdriver.Firefox(profile_1)
 		time.sleep(60)
 
@@ -33,10 +33,10 @@ def run_browser:
 #change extension: each time give url_list a list of 500 urls
 
 def change_extension:
-	os.chdir('')
+	os.chdir('/home/zhangyoufu/Downloads/addon-sdk-1.16/')
 	os.system('source bin/activate')
 
-	os.chdir('/path_webcrawler/data/')
+	os.chdir('/home/zhangyoufu/WebCrawler/data/')
 	os.system('rm url_list.txt')
 	#each create a new url_list for 500 lines
 	f = open('url_origin.txt','r')
@@ -55,12 +55,13 @@ def change_extension:
 # according to the number of databases to move to a certain directory
 
 def move_db(num):
-	os.chdir('/path_db/')
-	os.system('mv httpfox_sqlite /path_dir_putdb/httpfox_' + str(num) + '.sqlite' )
+	os.chdir('/home/zhangyoufu/profile_1/')
+	os.system('mv httpfox_sqlite /home/zhangyoufu/database1_merge/httpfox_' + str(num) + '.sqlite' )
 
 # merge all the databases with same schema
 
 def merge_db(num):
+	os.chdir('/home/zhangyoufu/database1_merge/')
 	for i in range(2,num):
 		conn = sqlite3.connect('httpfox_1.sqlite3')
 		c = conn.cursor()
@@ -76,6 +77,7 @@ def merge_db(num):
 # each time update databases with the previous number of entries in that database
 
 def update_db(num):
+	os.chdir('/home/zhangyoufu/database1_merge/')
 	for i in range(2,num):
 		conn = sqlite3.connect("httpfox_ + str(i-1) +'.sqlite' ")
 		c = conn.cursor()
