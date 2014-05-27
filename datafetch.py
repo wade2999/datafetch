@@ -11,7 +11,7 @@ import sqlite3
 
 def run_browser():
 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
-	os.chdir('/home/zhangyoufu/WebCrawler/')
+	#os.chdir('/home/zhangyoufu/WebCrawler/')
 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
@@ -38,7 +38,7 @@ def change_extension(num):
 	# os.system('source bin/activate')
 
 	os.chdir('/home/zhangyoufu/WebCrawler/data/')
-	os.system('rm url_list.txt')
+	os.system('rm url_list')
 	#each create a new url_list for 500 lines
 	f = open('url_origin','r')
 	f_out = open('url_list','w')
