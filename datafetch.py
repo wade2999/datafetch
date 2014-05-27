@@ -32,7 +32,7 @@ def run_browser():
 
 #change extension: each time give url_list a list of 500 urls
 
-def change_extension():
+def change_extension(num):
 	# os.chdir('/home/zhangyoufu/Downloads/addon-sdk-1.16/')
 	# os.system('source bin/activate')
 
@@ -42,10 +42,14 @@ def change_extension():
 	f = open('url_origin.txt','r')
 	f_out = open('url_list.txt','w')
 	flag = 0
+	start = 500 * (num-1)
+	end = 500 * num
 	for line in f:
 		flag += 1
-		f_out.write(line)
-		if (flag == 500):
+		if flag >= start and flag <= end:
+			f_out.write(line)
+
+		if flag > end:
 			break
 	f.close()
 
@@ -105,7 +109,7 @@ def main():
 	number = 2880
 	times = number/500 + 1
 	for i in range(1,times):
-		change_extension()
+		change_extension(i)
 		run_browser()
 		move_db(i)
 
