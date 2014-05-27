@@ -33,8 +33,8 @@ def run_browser():
 #change extension: each time give url_list a list of 500 urls
 
 def change_extension():
-	os.chdir('/home/zhangyoufu/Downloads/addon-sdk-1.16/')
-	os.system('source bin/activate')
+	# os.chdir('/home/zhangyoufu/Downloads/addon-sdk-1.16/')
+	# os.system('source bin/activate')
 
 	os.chdir('/home/zhangyoufu/WebCrawler/data/')
 	os.system('rm url_list.txt')
