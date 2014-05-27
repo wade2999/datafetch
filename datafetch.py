@@ -102,14 +102,15 @@ def update_db(num):
 # main function
 def main():
 	#number is the total number of url_list
+	number = 2880
 	times = number/500 + 1
 	for i in range(1,times):
 		change_extension()
 		run_browser()
 		move_db(i)
 
-	update_db(times)
-	merge_db(times)
+	#update_db(times)
+	#merge_db(times)
 
 if __name__ == "__main__":
 	main()
