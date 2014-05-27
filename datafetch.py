@@ -15,16 +15,16 @@ def run_browser():
 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
-	time.sleep(60)
-	statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
-	file_size = statinfo.st_size 
+	#time.sleep(60)
+	#statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
+	#file_size = statinfo.st_size 
 	# if open again, the add-on would cover it.
-	while file_size <= 0:
-		browser.quit()
-		profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
-		#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
-		browser = webdriver.Firefox(profile_1)
-		time.sleep(60)
+	# while file_size <= 0:
+	# 	browser.quit()
+	# 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
+	# 	#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
+	# 	browser = webdriver.Firefox(profile_1)
+	# 	time.sleep(60)
 
 	time.sleep(50000)
 	browser.quit()
