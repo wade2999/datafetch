@@ -9,7 +9,7 @@ import sqlite3
 #start the browser depend on the specific profile
 #and install the webcrawler extension
 
-def run_browser:
+def run_browser():
 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
 	browser = webdriver.Firefox(profile_1)
@@ -32,7 +32,7 @@ def run_browser:
 
 #change extension: each time give url_list a list of 500 urls
 
-def change_extension:
+def change_extension():
 	os.chdir('/home/zhangyoufu/Downloads/addon-sdk-1.16/')
 	os.system('source bin/activate')
 
@@ -100,7 +100,7 @@ def update_db(num):
 		
 
 # main function
-def main:
+def main():
 	#number is the total number of url_list
 	times = number/500 + 1
 	for i in range(1,times):
