@@ -11,7 +11,8 @@ import sqlite3
 
 def run_browser():
 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
-	extension = webdriver.FirefoxProfile.add_extension(profile_1, extension = '/home/zhangyoufu/WebCrawler/crawler.xpi')
+	os.chdir('/home/zhangyoufu/WebCrawler/')
+	extension = webdriver.FirefoxProfile.add_extension(profile_1, extension = 'crawler.xpi')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
 	time.sleep(60)
