@@ -19,7 +19,7 @@ def run_browser():
 	statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
 	file_size = statinfo.st_size 
 	# if open again, the add-on would cover it.
-	while file_size < 10:
+	while file_size <= 0:
 		browser.quit()
 		profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
 		#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
