@@ -44,7 +44,7 @@ def change_extension():
 	flag = 0
 	for line in f:
 		flag += 1
-		f.write(line)
+		f_out.write(line)
 		if (flag == 500):
 			break
 	f.close()
