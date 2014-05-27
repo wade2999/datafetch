@@ -10,7 +10,7 @@ import sqlite3
 #and install the webcrawler extension
 
 def run_browser:
-	profile_1 = webdriver.FirefoxProfile('/path/')
+	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1')
 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/path2/')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
@@ -33,7 +33,7 @@ def run_browser:
 #change extension: each time give url_list a list of 500 urls
 
 def change_extension:
-	os.chdir('/path_add_on/')
+	os.chdir('')
 	os.system('source bin/activate')
 
 	os.chdir('/path_webcrawler/data/')
