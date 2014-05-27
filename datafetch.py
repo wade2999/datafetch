@@ -52,7 +52,7 @@ def change_extension(num):
 		if flag > end:
 			break
 	f.close()
-	os.chdir('home/zhangyoufu/WebCrawler/')
+	os.chdir('/home/zhangyoufu/WebCrawler/')
 	os.system('cfx xpi')
 
 
