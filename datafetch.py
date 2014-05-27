@@ -13,6 +13,7 @@ def run_browser():
 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
 	#os.chdir('/home/zhangyoufu/WebCrawler/')
 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
+	extension_2 = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/Downloads/fourthparty-fourthparty-66fcfda/profile1/extensions/tmp/foxhttp.xpi')
 	browser = webdriver.Firefox(profile_1)
 	#check if the program run correctly
 	#time.sleep(60)
