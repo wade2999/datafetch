@@ -43,7 +43,7 @@ def change_extension():
 	f_out = open('url_list.txt','w')
 	flag = 0
 	for line in f:
-		flag++
+		flag += 1
 		f.write(line)
 		if (flag == 500):
 			break
