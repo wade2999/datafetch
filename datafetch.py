@@ -9,26 +9,26 @@ import sqlite3
 #start the browser depend on the specific profile
 #and install the webcrawler extension
 
-def run_browser():
-	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
-	#os.chdir('/home/zhangyoufu/WebCrawler/')
-	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
-	extension_2 = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/Downloads/fourthparty-fourthparty-66fcfda/profile1/extensions/tmp/foxhttp.xpi')
-	browser = webdriver.Firefox(profile_1)
-	#check if the program run correctly
-	#time.sleep(60)
-	#statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
-	#file_size = statinfo.st_size 
-	# if open again, the add-on would cover it.
-	# while file_size <= 0:
-	# 	browser.quit()
-	# 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
-	# 	#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
-	# 	browser = webdriver.Firefox(profile_1)
-	# 	time.sleep(60)
+# def run_browser():
+# 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
+# 	#os.chdir('/home/zhangyoufu/WebCrawler/')
+# 	extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
+# 	extension_2 = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/Downloads/fourthparty-fourthparty-66fcfda/profile1/extensions/tmp/foxhttp.xpi')
+# 	browser = webdriver.Firefox(profile_1)
+# 	#check if the program run correctly
+# 	#time.sleep(60)
+# 	#statinfo = os.stat('/home/zhangyoufu/profile_1/httpfox.sqlite')
+# 	#file_size = statinfo.st_size 
+# 	# if open again, the add-on would cover it.
+# 	# while file_size <= 0:
+# 	# 	browser.quit()
+# 	# 	profile_1 = webdriver.FirefoxProfile('/home/zhangyoufu/profile_1/')
+# 	# 	#extension = webdriver.FirefoxProfile.add_extension(profile_1,'/home/zhangyoufu/WebCrawler/crawler.xpi')
+# 	# 	browser = webdriver.Firefox(profile_1)
+# 	# 	time.sleep(60)
 
-	time.sleep(50000)
-	browser.quit()
+# 	time.sleep(50000)
+# 	browser.quit()
 
 
 
@@ -54,10 +54,12 @@ def change_extension(num):
 		if flag > end:
 			break
 	f.close()
+
+
+#run it seperately
+def run_it(num):
 	os.chdir('/home/zhangyoufu/WebCrawler/')
-	os.system('cfx xpi')
-
-
+	os.system('./script.sh')
 # according to the number of databases to move to a certain directory
 
 def move_db(num):
@@ -108,11 +110,13 @@ def update_db(num):
 # main function
 def main():
 	#number is the total number of url_list
-	number = 2880
+	number = 50000
 	times = number/500 + 1
 	for i in range(1,times):
 		change_extension(i)
-		run_browser()
+		run_it(i)
+		change_extension(i)
+		run_it(i)
 		move_db(i)
 
 	#update_db(times)
