@@ -68,43 +68,97 @@ def move_db(num):
 
 # merge all the databases with same schema
 
+# def merge_db(num):
+# 	os.chdir('/home/zhangyoufu/database1_merge/')
+# 	for i in range(2,num):
+# 		conn = sqlite3.connect('httpfox_1.sqlite3')
+# 		c = conn.cursor()
+# 		c.execute("attach 'httpfox_' + str(i) + '.sqlite' as toMerge")
+# 		c.execute('BEGIN')
+# 		c.execute('insert into http_request_headers select * from toMerge.http_request_headers')
+# 		c.execute('insert into http_requests select * from toMerge.http_requests')
+# 		c.execute('insert into pages select * from toMerge.pages')
+# 		c.execute('commit')
+# 		c.close()
+# 		conn.close()
+
+# each time update databases with the previous number of entries in that database
+
+# def update_db(num):
+# 	os.chdir('/home/zhangyoufu/database1_merge/')
+# 	for i in range(2,num):
+# 		conn = sqlite3.connect("httpfox_ + str(i-1) +'.sqlite' ")
+# 		c = conn.cursor()
+# 		id_pages = c.execute('select id from pages where id = (select max(id) from pages)')
+# 		id_request = c.execute('select id from http_requests where id = (select max(id) from http_requests)')
+# 		id_headers = c.execute('select id from http_request_headers where id = (select max(id) from http_request_headers)')
+# 		conn = sqlite3.connect("httpfox_ + str(i) +'.sqlite' ")
+# 		c = conn.cursor()
+# 		c.execute('UPDATE pages SET id = id + 10000000000')
+# 		c.execute("UPDATE pages SET id = id - (1000000000 - '%d')" % id_pages)
+# 		c.execute("UPDATE pages SET parent_id = parent_id + '%d'" % id_pages)
+
+# 		c.execute('UPDATE http_requests SET id = id + 10000000000')
+# 		c.execute("UPDATE http_requests SET id = id - (10000000000 - '%d')" % id_request)
+# 		c.execute("UPDATE http_requests SET page_id = page_id + '%d'" % id_pages)
+
+# 		c.execute('UPDATE http_request_headers SET id = id + 10000000000')
+# 		c.execute("UPDATE http_request_headers SET id = id - (10000000000 - '%d')" % id_headers)
+# 		c.execute("UPDATE http_request_headers SET http_request_id = http_request_id + '%d'" % id_request)
+
 def merge_db(num):
-	os.chdir('/home/zhangyoufu/database1_merge/')
-	for i in range(2,num):
-		conn = sqlite3.connect('httpfox_1.sqlite3')
+	#os.chdir('/home/zhangyoufu/database2_merge/')
+	for i in range(2,num+1):
+		conn = sqlite3.connect('httpfox_1.sqlite')
 		c = conn.cursor()
-		c.execute("attach 'httpfox_' + str(i) + '.sqlite' as toMerge")
+		add = 'httpfox_' + str(i) + '.sqlite'
+		c.execute("attach '%s' as toMerge" % add)
 		c.execute('BEGIN')
 		c.execute('insert into http_request_headers select * from toMerge.http_request_headers')
 		c.execute('insert into http_requests select * from toMerge.http_requests')
 		c.execute('insert into pages select * from toMerge.pages')
-		c.execute('commit')
-		c.close()
+		#c.execute('commit')
+		conn.commit()
+		#c.close()
 		conn.close()
 
 # each time update databases with the previous number of entries in that database
 
 def update_db(num):
-	os.chdir('/home/zhangyoufu/database1_merge/')
-	for i in range(2,num):
-		conn = sqlite3.connect("httpfox_ + str(i-1) +'.sqlite' ")
-		c = conn.cursor()
-		id_pages = c.execute('select id from pages where id = (select max(id) from pages)')
-		id_request = c.execute('select id from http_requests where id = (select max(id) from http_requests)')
-		id_headers = c.execute('select id from http_request_headers where id = (select max(id) from http_request_headers)')
-		conn = sqlite3.connect("httpfox_ + str(i) +'.sqlite' ")
-		c = conn.cursor()
-		c.execute('UPDATE pages SET id = id + 10000000000')
-		c.execute("UPDATE pages SET id = id - (1000000000 - '%d')" % id_pages)
-		c.execute("UPDATE pages SET parent_id = parent_id + '%d'" % id_pages)
+	#os.chdir('/home/zhangyoufu/database2_merge/')
 
-		c.execute('UPDATE http_requests SET id = id + 10000000000')
-		c.execute("UPDATE http_requests SET id = id - (10000000000 - '%d')" % id_request)
-		c.execute("UPDATE http_requests SET page_id = page_id + '%d'" % id_pages)
+	for i in range(2,num+1):
+		add_1 = 'httpfox_' + str(i-1) + '.sqlite'
+		conn = sqlite3.connect("%s" % add_1)
+		c = conn.cursor()
+		for row in c.execute('select id from pages where id = (select max(id) from pages)'):
+			id_pages = row[0]
+		for row in c.execute('select id from http_requests where id = (select max(id) from http_requests)'):
+			id_request = row[0]
+		for row in c.execute('select id from http_request_headers where id = (select max(id) from http_request_headers)'):
+			id_headers = row[0]
+		#print id_pages,id_headers,id_request
 
-		c.execute('UPDATE http_request_headers SET id = id + 10000000000')
-		c.execute("UPDATE http_request_headers SET id = id - (10000000000 - '%d')" % id_headers)
-		c.execute("UPDATE http_request_headers SET http_request_id = http_request_id + '%d'" % id_request)
+		id_pages_sum = id_pages_sum + id_pages
+		id_request_sum = id_request_sum + id_request
+		id_headers_sum = id_headers_sum + id_headers
+
+		add_2 = 'httpfox_' + str(i) + '.sqlite'
+		conn_1 = sqlite3.connect("%s" % add_2)
+		c_1 = conn_1.cursor()
+		c_1.execute('UPDATE pages SET id = id + 10000000000')
+		c_1.execute("UPDATE pages SET id = id - (10000000000 - '%d' - 10)" % id_pages_sum)
+		c_1.execute("UPDATE pages SET parent_id = parent_id + '%d' + 10" % id_pages_sum)
+
+		c_1.execute('UPDATE http_requests SET id = id + 10000000000')
+		c_1.execute("UPDATE http_requests SET id = id - (10000000000 - '%d' - 10)" % id_request_sum)
+		c_1.execute("UPDATE http_requests SET page_id = page_id + '%d' + 10" % id_pages_sum)
+
+		c_1.execute('UPDATE http_request_headers SET id = id + 10000000000')
+		c_1.execute("UPDATE http_request_headers SET id = id - (10000000000 - '%d' - 10)" % id_headers_sum)
+		c_1.execute("UPDATE http_request_headers SET http_request_id = http_request_id + '%d' + 10" % id_request_sum)
+		conn_1.commit()
+		conn_1.close()
 		
 
 # main function
